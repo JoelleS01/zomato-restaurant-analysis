@@ -1,0 +1,9 @@
+# Source data and local Power BI artifacts
+*.xlsx
+*.csv
+.DS_Store
+Thumbs.db
+
+# Exception: the currency conversion table is my own work, not source data,
+# and the report cannot be reproduced without it.
+!Dim_Currency.xlsx
