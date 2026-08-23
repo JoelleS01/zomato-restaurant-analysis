@@ -1,8 +1,12 @@
 # Zomato Restaurant Analysis
 
-A four-page Power BI report on 9,542 restaurants across 15 countries, built on a star schema and designed to answer where online delivery adoption actually concentrates.
+A four-page Power BI report on 9,542 restaurants across 15 countries, built on a star schema and designed to answer where online delivery adoption actually concentrates. The same analysis is also published as an interactive dashboard on Tableau Public: **[Zomato Restaurant Analysis](https://public.tableau.com/app/profile/joelle.spiegel/viz/ZomatoRestaurantAnalysis_17874244103290/ZomatoRestaurantAnalysis)**.
 
 Built as a project for the Purdue University / Simplilearn Post Graduate Program in Data Analytics.
+
+![Overview page of the Zomato Restaurant Analysis Power BI report](screenshots/01-overview.png)
+
+*Overview page of the report. The other three pages are in [`screenshots/`](screenshots/).*
 
 ## The question
 
@@ -81,6 +85,22 @@ I found this by checking the report's restaurant count against the source row co
 
 **The pattern worth naming:** all three defects produced output that looked completely normal. Nothing errored, no warning appeared, and every number was neatly formatted. A number that looks plausible and is wrong is far harder to catch than a number that looks broken, and the Average Cost for Two card is the example I would give.
 
+## Rebuilding it in Tableau
+
+**[View the interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/joelle.spiegel/viz/ZomatoRestaurantAnalysis_17874244103290/ZomatoRestaurantAnalysis)**
+
+With the corrected data in hand I rebuilt the analysis in Tableau, partly to see which findings survived a different tool and partly because a published link is easier to hand someone than a `.pbix` file they need Power BI to open.
+
+The dashboard carries four views: delivery rate by price tier, restaurant count by country, the rating band distribution, and a cost against delivery scatter across the 23 cuisines with 150 or more restaurants, which is the view that makes the 0.04 correlation visible rather than just stated.
+
+Two modelling decisions carried over from the Power BI version, and both are places the rebuild could have gone quietly wrong in the same way the original did.
+
+**The two tables are related, not joined.** The restaurant file holds one row per restaurant. The cuisine file holds one row per restaurant-and-cuisine pair, 19,705 of them. A join would have duplicated every restaurant once per cuisine and inflated every count on the dashboard, which is the same grain problem the bridge table solves in the Power BI model. Bikanervala is one row in the restaurant file and eight in the cuisine file, and it is the record I check whenever I want to know whether a count is being multiplied.
+
+**Delivery rate is an average of the 1/0 delivery flag, not a sum.** The price tiers hold very different numbers of restaurants, so a sum measures how large a tier is rather than how it behaves. Summed, tier 2 shows 1,286 restaurants offering delivery against tier 3's 411, which reads as tier 2 winning three to one. Averaged, it is 41.3 percent against 29.3 percent. The tier with the most delivery restaurants and the tier with the highest delivery rate do not have to be the same tier, and the rate is the question I was asking.
+
+The dashboard carries a notes block covering the source-data misspelling of `Phillipines` and the small-sample caveat on the non-Indian countries, so a reader who lands on it without me is not left guessing at either.
+
 ## Limitations
 
 **The currency conversion carries assumptions.** A single annual average rate ignores intra-year movement, which matters most for the Turkish lira, the currency that moved most across 2019. And the country samples outside India are small enough that one expensive restaurant moves the average, which is why Singapore's $114.19 rests on 20 restaurants.
@@ -110,4 +130,4 @@ Source data is not committed to this repository.
 
 ## Tools
 
-Power BI Desktop (star schema modeling, bridge tables, Power Query, DAX measures and calculated columns, slicers, custom theme, page navigation), Excel.
+Power BI Desktop (star schema modeling, bridge tables, Power Query, DAX measures and calculated columns, slicers, custom theme, page navigation), Tableau Public (table relationships, aggregation, filters, dashboard assembly, publishing), Excel.
