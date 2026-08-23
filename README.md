@@ -89,6 +89,10 @@ I found this by checking the report's restaurant count against the source row co
 
 **[View the interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/joelle.spiegel/viz/ZomatoRestaurantAnalysis_17874244103290/ZomatoRestaurantAnalysis)**
 
+[![The published Tableau dashboard: cuisine cost against delivery rate, restaurants by country, rating distribution, and delivery by price tier](screenshots/05-tableau-dashboard.png)](https://public.tableau.com/app/profile/joelle.spiegel/viz/ZomatoRestaurantAnalysis_17874244103290/ZomatoRestaurantAnalysis)
+
+*Static image of the published dashboard. Click it, or the link above, for the interactive version.*
+
 With the corrected data in hand I rebuilt the analysis in Tableau, partly to see which findings survived a different tool and partly because a published link is easier to hand someone than a `.pbix` file they need Power BI to open.
 
 The dashboard carries four views: delivery rate by price tier, restaurant count by country, the rating band distribution, and a cost against delivery scatter across the 23 cuisines with 150 or more restaurants, which is the view that makes the 0.04 correlation visible rather than just stated.
